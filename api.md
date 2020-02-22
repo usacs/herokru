@@ -1,0 +1,48 @@
+## limitations
+- no volumes
+- one container only
+- no replication yet
+## models
+- user `{_id, email, hashpw, apps:[app], appLimit, admin}`
+- partialUser `{email, newpw, apps:[app]}`
+- partialUserAdmin `{email, apps:[app], appLimit, admin}`
+- app `{_id, name, domains:[domain], image, container, env:{k:v}}`
+- partialApp `{name, domains, image, running, env:{k:v}}`
+- 
+## endpoints
+- `/api/user`
+  - `POST /login` {email, pass} -> jwt
+  - `POST /` partialUser
+	- returns user (no password)
+  - `GET /`
+	- returns [user] (no password)
+	- also admin needed to see other users
+  - `GET /_id`
+    - returns [user] (no password)
+	- also admin needed to see other users
+  - `PUT /_id` partialUser
+    - returns updated user
+	- admin needed for certain fields
+  - `DELETE /_id`
+    - disables an account
+  - `GET /apps`
+    - displays all the apps. query {running:undef|true|false, users:[id]}
+	- returns as `[{...app, ownerID:_id, ownerName: email}]`
+  - `/_id/app`
+	- `POST /` partialApp
+	  - adds an app to the user. may be rejected if app limit hit
+	- `GET /`
+	  - returns a user's apps
+	- `GET /_id`
+	  - returns a specific app
+	  - `{...app, dockerStatus}`
+	- `PUT /_id` partialApp
+	  - updates an app
+	- `DELETE /_id`
+	  - removes an app
+	- `POST /_id/exec` {command}
+	  - attaches to a container and runs the command
+	- `POST /_id/attach`
+	  - tunnels docker attach **stretch goal**
+	- `GET /_id/logs`
+	  - gets a containers logs
