@@ -3,8 +3,8 @@
 - one container only
 - no replication yet
 ## models
-- user `{_id, email, hashpw, apps:[app], appLimit, admin}`
-- partialUser `{email, newpw, apps:[app]}`
+- user `{_id, email, hashpass, apps:[app], appLimit, admin}`
+- partialUser `{email, newpass}`
 - partialUserAdmin `{email, apps:[app], appLimit, admin}`
 - app `{_id, name, domains:[domain], image, container, env:{k:v}}`
 - partialApp `{name, domains, image, running, env:{k:v}}`
