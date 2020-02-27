@@ -2,6 +2,7 @@
 - no volumes
 - one container only
 - no replication yet
+
 ## models
 - user `{_id, email, hashpass, apps:[app], appLimit, admin}`
 - partialUser `{email, newpass}`
